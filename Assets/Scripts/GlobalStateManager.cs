@@ -33,8 +33,31 @@ using System.Collections;
 
 public class GlobalStateManager : MonoBehaviour
 {
+    private int _deadPlayers = 0;
+    private int _deadPlayerNumber = -1;
+
     public void PlayerDied (int playerNumber)
     {
+        _deadPlayers++;
 
+        if (_deadPlayers == 1)
+        {
+            _deadPlayerNumber = playerNumber;
+            Invoke("CheckPlayersDeath", .3f);
+        }
+    }
+
+    void CheckPlayersDeath()
+    {
+        if (_deadPlayers == 1)
+        {
+            Debug.Log(_deadPlayerNumber == 1 ? 
+                "Player 2 is the winner!" : 
+                "Player 1 is the winner!");
+        }
+        else
+        {
+            Debug.Log("The game ended in a draw!");
+        }
     }
 }
